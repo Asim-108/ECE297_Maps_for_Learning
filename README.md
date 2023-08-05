@@ -2,7 +2,7 @@
 GIS targeted towards students
 
 
-This is a GIS mapping software that was developed in the ECE287 course at the University of Toronto. The team members for this course were Asim Rahman, Andrew Cheung and Chloe Soong.
+This is a GIS mapping software that was developed in the ECE297 course at the University of Toronto. The team members for this course were Asim Rahman, Andrew Cheung and Chloe Soong. This map was made using open source materials and APIs from OSMdatabase.
 
 We tailor made this mapping software for students, and as such we have tailor made features and the likes for them.
 
