@@ -1,0 +1,25 @@
+{
+    "env": {
+        "myIncludePath": [
+            "/nfs/ug/fast1/ece297s/public/include/*",
+            "/nfs/ug/fast1/ece297s/.public_test/include/*",
+            "${workspaceFolder}/**"
+        ]
+    },
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${myIncludePath}"
+            ],
+            "browse": {
+                "path": [
+                    "${myIncludePath}"
+                ]
+            },
+            "forcedInclude": ["${myIncludePath}"],
+            "mergeConfigurations": true
+        }
+    ],
+    "version": 4
+}

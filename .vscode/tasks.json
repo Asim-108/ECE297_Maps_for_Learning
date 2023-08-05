@@ -1,0 +1,107 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=733558
+	// for the documentation about the tasks.json format
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Tests (Release)",
+			"type": "shell",
+			"command": "make test_libstreetmap CONF=release",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"problemMatcher": "$gcc",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			}
+		},
+		{
+			"label": "Build Tests (Debug)",
+			"type": "shell",
+			"command": "make test_libstreetmap CONF=debug",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"problemMatcher": "$gcc",
+			"options": {"cwd": "${workspaceFolder}"}
+		},
+		{
+			"label": "Build Tests (DebugCheck)",
+			"type": "shell",
+			"command": "make test_libstreetmap CONF=debug_check",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"problemMatcher": "$gcc",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			}
+		},
+		{
+			"label": "Build Tests (Profile)",
+			"type": "shell",
+			"command": "make test_libstreetmap CONF=profile",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"problemMatcher": "$gcc",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			}
+		},
+		{
+			"label": "Build Mapper (Release)",
+			"type": "shell",
+			"command": "make mapper CONF=release",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": "$gcc",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			}
+		},
+		{
+			"label": "Build Mapper (Debug)",
+			"type": "shell",
+			"command": "make mapper CONF=debug",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": "$gcc",
+			"options": {"cwd": "${workspaceFolder}"}
+		},
+		{
+			"label": "Build Mapper (DebugCheck)",
+			"type": "shell",
+			"command": "make mapper CONF=debug_check",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": "$gcc",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			}
+		},
+		{
+			"label": "Build Mapper (Profile)",
+			"type": "shell",
+			"command": "make mapper CONF=profile",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": "$gcc",
+			"options": {
+				"cwd": "${workspaceFolder}"
+			}
+		}
+	]
+}

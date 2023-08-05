@@ -1,0 +1,238 @@
+
+#include "m1.h"
+#include "unit_test_util.h"
+
+#include "StreetsDatabaseAPI.h"
+#include "OSMDatabaseAPI.h"
+
+#include <UnitTest++/UnitTest++.h>
+
+#include <random>
+#include <algorithm>
+#include <set>
+
+using ece297test::relative_error;
+using ece297test::sorted;
+
+SUITE(intersection_queries_public_toronto_canada) {
+
+    struct BaseMapFixture {
+        BaseMapFixture() {
+            //Load the map
+            try {
+                loadMap("/cad2/ece297s/public/maps/toronto_canada.streets.bin");
+            } catch (...) {
+                std::cout << "!!!! BaseMapFixture test setup: loadMap threw an exceptinon !!!!" << std::endl;
+                throw; // re-throw exceptinon
+            }
+        }
+    
+        ~BaseMapFixture() {
+            //Clean-up
+            try {
+                closeMap();
+            } catch (const std::exception& e) {
+                std::cout << "!!!! BaseMapFixture test teardown: closeMap threw an exceptinon. what(): " << e.what() << " !!!!" << std::endl;
+                std::terminate(); // we're in a destructor
+            } catch (...) {
+                std::cout << "!!!! BaseMapFixture test teardown: closeMap threw an exceptinon !!!!" << std::endl;
+                std::terminate(); // we're in a destructor
+            }
+        }
+    };
+
+
+    struct MapFixture : BaseMapFixture {};
+
+    TEST_FIXTURE(MapFixture, intersection_street_segments) {
+        std::vector<StreetSegmentIdx> expected;
+
+        expected = {7, 140, 147};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(13)));
+
+        expected = {31787, 31788, 31837};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(34725)));
+
+        expected = {34936, 34937, 220373};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(37717)));
+
+        expected = {42450, 42451};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(44815)));
+
+        expected = {47569, 85425, 85426};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(49589)));
+
+        expected = {49799, 51228, 53244};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(52222)));
+
+        expected = {51362, 54402, 62613};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(54071)));
+
+        expected = {90437, 90438, 177287};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(83337)));
+
+        expected = {105679, 105680, 227658};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(96058)));
+
+        expected = {116044, 160239, 160240};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(104028)));
+
+        expected = {118934, 118935, 245535};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(105931)));
+
+        expected = {125756, 125772, 125773};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(110624)));
+
+        expected = {127079, 127086};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(111575)));
+
+        expected = {142844, 142846, 142847};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(122449)));
+
+        expected = {156714, 156715, 156723, 156724};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(131184)));
+
+        expected = {159016, 159017, 163281};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(132416)));
+
+        expected = {164624, 164820, 164821};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(135783)));
+
+        expected = {166832, 166833, 216478, 216479};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(136971)));
+
+        expected = {172443, 172444, 257290};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(140068)));
+
+        expected = {181096, 181097, 260154};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(145152)));
+
+        expected = {191590, 191595, 191598};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(150803)));
+
+        expected = {196461, 196467};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(153323)));
+
+        expected = {201608, 201628};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(156304)));
+
+        expected = {230765, 230766};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(171471)));
+
+        expected = {231741};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(171961)));
+
+        expected = {234103, 234104};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(173265)));
+
+        expected = {237148, 237149, 237152};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(174923)));
+
+        expected = {238431, 238432, 261858};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(175707)));
+
+        expected = {261404, 261405, 261407};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(186424)));
+
+        expected = {272517, 272520};
+        ECE297_CHECK_EQUAL(expected, sorted(findStreetSegmentsOfIntersection(191528)));
+
+    } //intersection_street_segments
+
+    TEST_FIXTURE(MapFixture, adjacent_intersections) {
+        std::vector<IntersectionIdx> expected;
+
+        expected = {};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(29971)));
+
+        expected = {};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(93733)));
+
+        expected = {13821, 13823, 14827, 14828};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(13822)));
+
+        expected = {14642, 14644, 80544};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(14643)));
+
+        expected = {32221, 55546};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(35253)));
+
+        expected = {35769, 35771, 36138};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(35770)));
+
+        expected = {36642, 36662, 36669};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(36668)));
+
+        expected = {41707, 41710, 41717};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(41708)));
+
+        expected = {46766, 46768, 176493};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(46767)));
+
+        expected = {48966};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(48967)));
+
+        expected = {73992, 116913, 116914};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(112558)));
+
+        expected = {82731, 82733, 143045};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(82732)));
+
+        expected = {88792, 88978, 88984};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(88972)));
+
+        expected = {89913, 89942, 89953};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(89914)));
+
+        expected = {91877, 92032, 92243};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(92031)));
+
+        expected = {98049, 104656};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(101314)));
+
+        expected = {103448, 190091};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(190090)));
+
+        expected = {108302};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(105484)));
+
+        expected = {114772, 114798, 114799};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(114771)));
+
+        expected = {115845, 169368};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(146821)));
+
+        expected = {142805, 142807, 143291};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(142806)));
+
+        expected = {144320, 144330, 144350};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(144331)));
+
+        expected = {145133};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(46282)));
+
+        expected = {152285, 152290};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(152289)));
+
+        expected = {154506, 154508, 154510, 154518};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(154509)));
+
+        expected = {163411, 163413, 163415};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(163412)));
+
+        expected = {163886};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(163888)));
+
+        expected = {164599, 164602, 164625};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(164600)));
+
+        expected = {169543, 169544};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(169542)));
+
+        expected = {175476, 175498, 175500};
+        ECE297_CHECK_EQUAL(expected, sorted(findAdjacentIntersections(175499)));
+
+    } //adjacent_intersections
+
+} //intersection_queries_public_toronto_canada
+

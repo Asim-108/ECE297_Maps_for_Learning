@@ -1,0 +1,166 @@
+#include <random>
+#include <UnitTest++/UnitTest++.h>
+
+#include "StreetsDatabaseAPI.h"
+#include "m1.h"
+#include "m3.h"
+
+#include "unit_test_util.h"
+#include "path_verify.h"
+
+using ece297test::relative_error;
+using ece297test::path_is_legal;
+
+
+SUITE(inter_inter_path_func_optimality_public) {
+struct MapFixture {
+    MapFixture() {
+        rng = std::minstd_rand(4);
+        rand_intersection = std::uniform_int_distribution<IntersectionIdx>(0, getNumIntersections()-1);
+        rand_street = std::uniform_int_distribution<StreetIdx>(1, getNumStreets()-1);
+        rand_segment = std::uniform_int_distribution<StreetSegmentIdx>(0, getNumStreetSegments()-1);
+        rand_poi = std::uniform_int_distribution<POIIdx>(0, getNumPointsOfInterest()-1);
+        rand_lat = std::uniform_real_distribution<double>(46.650573730, 46.712596893);
+        rand_lon = std::uniform_real_distribution<double>(7.800188065, 7.914441109);
+        rand_turn_penalty = std::uniform_real_distribution<double>(0., 30.);
+        rand_walking_speed = std::uniform_real_distribution<double>(0.8, 5);
+        rand_walking_time_limit = std::uniform_real_distribution<double>(0.0, 300);
+    }
+
+    std::minstd_rand rng;
+    std::uniform_int_distribution<IntersectionIdx> rand_intersection;
+    std::uniform_int_distribution<StreetSegmentIdx> rand_street;
+    std::uniform_int_distribution<StreetSegmentIdx> rand_segment;
+    std::uniform_int_distribution<POIIdx> rand_poi;
+    std::uniform_real_distribution<double> rand_lat;
+    std::uniform_real_distribution<double> rand_lon;
+    std::uniform_real_distribution<double> rand_turn_penalty;
+    std::uniform_real_distribution<double> rand_walking_speed;
+    std::uniform_real_distribution<double> rand_walking_time_limit;
+};
+    TEST(findPathBetweenIntersections_optimality) {
+        std::vector<StreetSegmentIdx> path;
+        path = findPathBetweenIntersections(std::make_pair(0, 766), 0.00000000000000000);
+        CHECK(path_is_legal(0, 766, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 339.08734273306953355);
+
+        path = findPathBetweenIntersections(std::make_pair(116, 2196), 0.00000000000000000);
+        CHECK(path_is_legal(116, 2196, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 350.03347237945604320);
+
+        path = findPathBetweenIntersections(std::make_pair(424, 1587), 0.00000000000000000);
+        CHECK(path_is_legal(424, 1587, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 640.57710972199629396);
+
+        path = findPathBetweenIntersections(std::make_pair(527, 134), 30.00000000000000000);
+        CHECK(path_is_legal(527, 134, path));
+        CHECK(computePathTravelTime(path, 30.00000000000000000) <= 416.85756913473994700);
+
+        path = findPathBetweenIntersections(std::make_pair(741, 537), 0.00000000000000000);
+        CHECK(path_is_legal(741, 537, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 138.19142254756823718);
+
+        path = findPathBetweenIntersections(std::make_pair(757, 1635), 30.00000000000000000);
+        CHECK(path_is_legal(757, 1635, path));
+        CHECK(computePathTravelTime(path, 30.00000000000000000) <= 425.11555414919655504);
+
+        path = findPathBetweenIntersections(std::make_pair(807, 544), 0.00000000000000000);
+        CHECK(path_is_legal(807, 544, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 273.50814116722187919);
+
+        path = findPathBetweenIntersections(std::make_pair(829, 105), 0.00000000000000000);
+        CHECK(path_is_legal(829, 105, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 139.29492730244606946);
+
+        path = findPathBetweenIntersections(std::make_pair(914, 1277), 0.00000000000000000);
+        CHECK(path_is_legal(914, 1277, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 370.88510721512221835);
+
+        path = findPathBetweenIntersections(std::make_pair(987, 1643), 30.00000000000000000);
+        CHECK(path_is_legal(987, 1643, path));
+        CHECK(computePathTravelTime(path, 30.00000000000000000) <= 332.35010252307665723);
+
+        path = findPathBetweenIntersections(std::make_pair(1052, 713), 30.00000000000000000);
+        CHECK(path_is_legal(1052, 713, path));
+        CHECK(computePathTravelTime(path, 30.00000000000000000) <= 626.41640431288533364);
+
+        path = findPathBetweenIntersections(std::make_pair(1142, 2210), 0.00000000000000000);
+        CHECK(path_is_legal(1142, 2210, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 769.43975420998754089);
+
+        path = findPathBetweenIntersections(std::make_pair(1348, 1380), 0.00000000000000000);
+        CHECK(path_is_legal(1348, 1380, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 80.61492499985595828);
+
+        path = findPathBetweenIntersections(std::make_pair(1366, 1908), 0.00000000000000000);
+        CHECK(path_is_legal(1366, 1908, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 455.54997810083756349);
+
+        path = findPathBetweenIntersections(std::make_pair(1414, 397), 0.00000000000000000);
+        CHECK(path_is_legal(1414, 397, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 171.93634256242361857);
+
+        path = findPathBetweenIntersections(std::make_pair(1433, 2185), 30.00000000000000000);
+        CHECK(path_is_legal(1433, 2185, path));
+        CHECK(computePathTravelTime(path, 30.00000000000000000) <= 719.08814839595254398);
+
+        path = findPathBetweenIntersections(std::make_pair(1485, 974), 0.00000000000000000);
+        CHECK(path_is_legal(1485, 974, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 401.21097348310036068);
+
+        path = findPathBetweenIntersections(std::make_pair(1311, 358), 30.00000000000000000);
+        CHECK(path_is_legal(1311, 358, path));
+        CHECK(computePathTravelTime(path, 30.00000000000000000) <= 678.42425136866188495);
+
+        path = findPathBetweenIntersections(std::make_pair(1679, 1485), 0.00000000000000000);
+        CHECK(path_is_legal(1679, 1485, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 195.12002196288895561);
+
+        path = findPathBetweenIntersections(std::make_pair(1706, 399), 30.00000000000000000);
+        CHECK(path_is_legal(1706, 399, path));
+        CHECK(computePathTravelTime(path, 30.00000000000000000) <= 689.91759107494158343);
+
+        path = findPathBetweenIntersections(std::make_pair(833, 844), 30.00000000000000000);
+        CHECK(path_is_legal(833, 844, path));
+        CHECK(computePathTravelTime(path, 30.00000000000000000) <= 358.81074586696331608);
+
+        path = findPathBetweenIntersections(std::make_pair(135, 1335), 0.00000000000000000);
+        CHECK(path_is_legal(135, 1335, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 54.04829980842692549);
+
+        path = findPathBetweenIntersections(std::make_pair(1965, 1711), 0.00000000000000000);
+        CHECK(path_is_legal(1965, 1711, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 338.51723851778922381);
+
+        path = findPathBetweenIntersections(std::make_pair(2016, 273), 30.00000000000000000);
+        CHECK(path_is_legal(2016, 273, path));
+        CHECK(computePathTravelTime(path, 30.00000000000000000) <= 798.35828465239092111);
+
+        path = findPathBetweenIntersections(std::make_pair(1703, 1461), 30.00000000000000000);
+        CHECK(path_is_legal(1703, 1461, path));
+        CHECK(computePathTravelTime(path, 30.00000000000000000) <= 633.26480367341503097);
+
+        path = findPathBetweenIntersections(std::make_pair(897, 856), 30.00000000000000000);
+        CHECK(path_is_legal(897, 856, path));
+        CHECK(computePathTravelTime(path, 30.00000000000000000) <= 723.21113819200706985);
+
+        path = findPathBetweenIntersections(std::make_pair(2158, 578), 30.00000000000000000);
+        CHECK(path_is_legal(2158, 578, path));
+        CHECK(computePathTravelTime(path, 30.00000000000000000) <= 547.60615910570857068);
+
+        path = findPathBetweenIntersections(std::make_pair(2040, 1953), 0.00000000000000000);
+        CHECK(path_is_legal(2040, 1953, path));
+        CHECK(computePathTravelTime(path, 0.00000000000000000) <= 379.59804631765712202);
+
+        path = findPathBetweenIntersections(std::make_pair(2186, 206), 30.00000000000000000);
+        CHECK(path_is_legal(2186, 206, path));
+        CHECK(computePathTravelTime(path, 30.00000000000000000) <= 276.84218114965659652);
+
+        path = findPathBetweenIntersections(std::make_pair(646, 1730), 30.00000000000000000);
+        CHECK(path_is_legal(646, 1730, path));
+        CHECK(computePathTravelTime(path, 30.00000000000000000) <= 498.38955992925349392);
+
+    } //findPathBetweenIntersections_optimality
+
+} //inter_inter_path_func_optimality_public
+
